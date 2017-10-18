@@ -1,0 +1,72 @@
+//Sherlock and Anagrams
+
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static int sherlockAndAnagrams(String s){
+        // Complete this function
+        int counter=0;
+        ArrayList<String> list = new ArrayList<String>();
+        int len=s.length();
+        
+        
+        //Creating a list of all substrings from the string
+            for (int j = 0; j < len; j++) {
+                for (int sub = 1; sub <= len-j; sub++) {
+                    String subStr = s.substring(j, j+sub);
+                    list.add(subStr);
+                }
+            }
+        //BruteForce to find anagram pairs among list of subsets
+        for (int j = 0; j < list.size(); j++) {
+                String element = list.get(j);
+                for (int k = j+1; k < list.size(); k++) {
+                    if(isAnagram(list.get(k), element)){
+                        counter++;
+                    }
+                }
+            }
+        return counter;
+    }
+    
+    static boolean isAnagram(String s1,String s2)
+    {
+        if(s1.length() != s2.length()){
+            return false;
+        }
+        int alphabets[]=new int[26];
+        for(int i=0;i<s1.length();i++)
+        {
+            char ch;
+            ch=s1.charAt(i);
+            alphabets[ch-'a']++;
+            ch=s2.charAt(i);
+            alphabets[ch-'a']--;
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(alphabets[i]==0)
+                continue;
+            else 
+                return false;
+            }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int q = in.nextInt();
+        for(int a0 = 0; a0 < q; a0++){
+            String s = in.next();
+            int result = sherlockAndAnagrams(s);
+            System.out.println(result);
+        }
+    }
+}
